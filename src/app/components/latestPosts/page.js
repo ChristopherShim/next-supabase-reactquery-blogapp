@@ -6,8 +6,8 @@ import { PostCard } from "../postCard/page";
 export const LatestPosts = () => {
   return (
     <>
-      <h1>Blogs</h1>
-      <div className="mt-[3rem] gap-[10px] w-full grid grid-cols-4">
+      <h1 className="text-[120px]">Blog</h1>
+      <div className="mt-[0rem] gap-[10px] w-full grid grid-cols-4">
         {data.map(d => {
           return (
             <PostCard
