@@ -1,64 +1,67 @@
-"use client";
+"use client"
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import AuthContext from "../stores/authContext";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const router = useRouter();
+  // const [user, setUser] = useState(null);
+  // const [loading, setLoading] = useState(true);
 
-  const supabase = createClientComponentClient();
+  const {user, handleSignIn, handleSignUp, handleLogout, loading, setLoading, email, setEmail, password, setPassword, randomAction} = useContext(AuthContext)
 
-  useEffect(() => {
-    async function getUser() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-      setLoading(false);
-    }
+  // const supabase = createClientComponentClient();
 
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   async function getUser() {
+  //     const {
+  //       data: { user },
+  //     } = await supabase.auth.getUser();
+  //     setUser(user);
+  //     setLoading(false);
+  //   }
+
+  //   getUser();
+  // }, []);
 
 
-  const handleSignUp = async () => {
-    const res = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-      },
-    });
-    setUser(res.data.user)
-    router.refresh();
-    setEmail("");
-    setPassword("");
-  };
+  // const handleSignUp = async () => {
+  //   const res = await supabase.auth.signUp({
+  //     email,
+  //     password,
+  //     options: {
+  //       emailRedirectTo: `${location.origin}/auth/callback`,
+  //     },
+  //   });
+  //   setUser(res.data.user)
+  //   router.refresh();
+  //   setEmail("");
+  //   setPassword("");
+  // };
 
-  const handleSignIn = async () => {
-    const res = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    setUser(res.data.user)
-    router.refresh();
-    setEmail("");
-    setPassword("");
-  };
+  // const handleSignIn = async () => {
+  //   const res = await supabase.auth.signInWithPassword({
+  //     email,
+  //     password,
+  //   });
+  //   setUser(res.data.user)
+  //   router.refresh();
+  //   setEmail("");
+  //   setPassword("");
+  // };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.refresh();
-    setUser(null)
+  // const handleLogout = async () => {
+  //   await supabase.auth.signOut();
+  //   router.refresh();
+  //   setUser(null)
 
-  }
+  // }
 
-  console.log({loading,user})
+  // console.log({loading,user})
 
   if(loading){
     return <h1>Loading...</h1>
@@ -113,6 +116,7 @@ export default function LoginPage() {
         >
           Sign In
         </button>
+        <button onClick={randomAction}> Random Button</button>
       </div>
     </main>
   );
